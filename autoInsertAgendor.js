@@ -3,6 +3,8 @@
 // dealStages
 // id: 3000255
 
+const url = 'https://sendagendor.olivehill.com.br/';
+const token = '419a935e-22ec-46aa-b42e-0ab293225556';
 
 let infosHeader = document.querySelector("#orcamento_form > div.col-sm-9.form-fields > div > div > fieldset:nth-child(1) > div.field-boxes.row > div:nth-child(1) > div > p")
 let arrInfosHeader = infosHeader.innerText.split("\n")
@@ -37,9 +39,7 @@ if (servicePrice) {
 insertEl(data)
 action()
 function action() {
-    const url = 'https://6795-168-228-217-148.ngrok-free.app/';
     const route = 'api/organizations/';
-    const token = '419a935e-22ec-46aa-b42e-0ab293225556';
 
     fetch(`${url}${route}${token}`)
         .then(response => {
@@ -121,9 +121,9 @@ function sendAgendor() {
         redirect: "follow"
     };
 
-    const url = 'https://6795-168-228-217-148.ngrok-free.app/';
+    // const url = 'https://6795-168-228-217-148.ngrok-free.app/';
     const route = 'api/organizations/' + document.querySelector("#organizationId").value + '/';
-    const token = '419a935e-22ec-46aa-b42e-0ab293225556';
+    // const token = '419a935e-22ec-46aa-b42e-0ab293225556';
 
     fetch(`${url}${route}${token}`, requestOptions)
         // fetch("https://api.agendor.com.br/v3/organizations/"+document.querySelector("#organizationId").value+"/deals", requestOptions)
@@ -139,6 +139,7 @@ function sendAgendor() {
         })
         .catch((error) => console.error(error));
 }
+
 function checkOrganization(orgSGQ, orgAgendor) {
     if (orgSGQ.indexOf(orgAgendor) !== -1) {
         return true;
