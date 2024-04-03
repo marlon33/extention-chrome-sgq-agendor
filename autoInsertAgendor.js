@@ -168,3 +168,14 @@ function clearLocalStorage() {
     localStorage.clear();
 }
 
+// setLocalStorageItem('user', {id:1,name:"Marlon Braga"});
+// setLocalStorageItem('funnel', {funnelId:1,funnelName:"Funil de vendas"});
+// setLocalStorageItem('deal', {dealId:1,dealName:"Em contato",dealSequece:2});
+
+// console.log([
+//     getLocalStorageItem('user'),
+//     getLocalStorageItem('funnel'),
+//     getLocalStorageItem('deal'),
+// ]);
+
+// clearLocalStorage()
