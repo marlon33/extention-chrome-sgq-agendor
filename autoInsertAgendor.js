@@ -96,8 +96,9 @@ function insertEl(data) {
 
 
 function resSendAgendor(text) {
-    const el = document.querySelector("resSendAgendor");
+    const el = document.querySelector("#resSendAgendor");
     el.innerHTML = `${text}`;
+    console.log(el)
 }
 function sendAgendor() {
     const myHeaders = new Headers();
@@ -126,10 +127,15 @@ function sendAgendor() {
 
     fetch(`${url}${route}${token}`, requestOptions)
         // fetch("https://api.agendor.com.br/v3/organizations/"+document.querySelector("#organizationId").value+"/deals", requestOptions)
-        .then((response) => response.text())
+        .then((response) => response.json())
         .then((result) => {
-            console.log(result,result.errors);
-            resSendAgendor("Enviado com sucesso")
+            if(result.errors){
+                console.log("error")
+                resSendAgendor(result.errors[0])
+            }else{
+                resSendAgendor("Enviado com sucesso!")
+            }
+            console.log(result);
         })
         .catch((error) => console.error(error));
 }
