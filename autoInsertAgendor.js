@@ -38,6 +38,47 @@ if (servicePrice) {
 
 insertEl(data)
 action()
+getMe()
+getFunnel()
+
+function getMe() {
+    const route = 'api/me/';
+
+    fetch(`${url}${route}${token}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(response => {
+            console.log(response)
+            setLocalStorageItem('user', {id:response.accountId,name:response.name});
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch request:', error);
+        });
+}
+
+function getFunnel() {
+    const route = 'api/funnels/';
+
+    fetch(`${url}${route}${token}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(response => {
+            console.log(response)
+            // setLocalStorageItem('user', {id:response.accountId,name:response.name});
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch request:', error);
+        });
+}
+
 function action() {
     const route = 'api/organizations/';
 
@@ -94,12 +135,12 @@ function insertEl(data) {
     </div>`)
 }
 
-
 function resSendAgendor(text) {
     const el = document.querySelector("#resSendAgendor");
     el.innerHTML = `${text}`;
     console.log(el)
 }
+
 function sendAgendor() {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
