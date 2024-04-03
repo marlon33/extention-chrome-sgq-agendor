@@ -112,6 +112,7 @@ function action() {
                     options += `<option value="${el.id}">${el.name}</option>`;
                 }
             });
+            selectCard = ``
             res.innerHTML = `<select id="organizationId" style="width: 100%;">${options}</select>`
         })
         .catch(error => {
