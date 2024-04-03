@@ -73,6 +73,18 @@ function getFunnel() {
         .then(response => {
             console.log(response)
             // setLocalStorageItem('user', {id:response.accountId,name:response.name});
+            
+            const res = document.querySelector("#setFunnel");
+            console.log(res, response)
+            let options = '';
+            response.data.forEach(el => {
+                // if (checkOrganization(data.clientName, el.name)) {
+                    options += `<option value="${el.id}" selected>${el.name}</option>`;
+                // } else {
+                //     options += `<option value="${el.id}">${el.name}</option>`;
+                // }
+            });
+            res.innerHTML = `<select id="organizationId" style="width: 100%;">${options}</select>`
         })
         .catch(error => {
             console.error('There was a problem with the fetch request:', error);
@@ -108,7 +120,9 @@ function action() {
 }
 
 function insertEl(data) {
-    document.querySelector("#orcamento_form > div.col-sm-3.form-buttons > div > div").insertAdjacentHTML("afterend", `<div>
+    document.querySelector("#orcamento_form > div.col-sm-3.form-buttons > div > div").insertAdjacentHTML("afterend", `
+<div style="display: flex; margin:10px 0;" id="setFunnel"></div>
+    <div>
     <div style="display: flex;">
     <div>Titulo:</div>
     <div style="width: 100%;">
@@ -126,6 +140,7 @@ function insertEl(data) {
     <div>Empresa:</div>
     <div id="selecOrganization" style="width: 100%;"></div>
 </div>
+
 <div style="display: flex; margin:10px 0;" id="resSendAgendor"></div>
 
 <div style="display: flex;">
