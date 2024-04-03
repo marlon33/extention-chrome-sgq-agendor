@@ -160,7 +160,7 @@ function getLocalStorageItem(key) {
     return value ? JSON.parse(value) : null;
 }
 
-function removLocalStorageItem(key) {
+function removeLocalStorageItem(key) {
     localStorage.removeItem(key);
 }
 
