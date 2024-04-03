@@ -121,7 +121,10 @@ function action() {
 
 function insertEl(data) {
     document.querySelector("#orcamento_form > div.col-sm-3.form-buttons > div > div").insertAdjacentHTML("afterend", `
-<div style="display: flex; margin:10px 0;" id="setFunnel"></div>
+<div style="display: flex;">
+    <div>Empresa:</div>
+    <div id="setFunnel" style="width: 100%;"></div>
+</div>
     <div>
     <div style="display: flex;">
     <div>Titulo:</div>
