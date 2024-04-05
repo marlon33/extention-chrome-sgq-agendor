@@ -99,7 +99,7 @@ function getFunnel() {
 
             const selectFunnelCard = document.querySelector("#funnelId");
             if (selectFunnelCard) {
-                if(funnelIdLS != null){
+                if (funnelIdLS != null) {
                     setCardElement(funnelIdLS);
                 }
                 selectFunnelCard.addEventListener('change', function (e) {
@@ -115,7 +115,7 @@ function getFunnel() {
         });
 }
 
-function setCardElement(funnelId){
+function setCardElement(funnelId) {
     const setCard = document.querySelector("#setCard");
     let optionsCard = '';
     setLocalStorageItem('funnelId', funnelId);
@@ -129,8 +129,8 @@ function setCardElement(funnelId){
                 }
             });
         }
-    }); 
-    
+    });
+
     setCard.innerHTML = `<select id="cardId" style="width: 100%;">
             <option>Selecione um card</option>
             ${optionsCard}
@@ -169,7 +169,15 @@ function action() {
             res.innerHTML = `<select id="organizationId" style="width: 100%;">
                 <option>Selecione uma empresa</option>
                 ${options}
-            </select>`
+            </select>`;
+
+            const organizationId = document.querySelector("#organizationId");
+            if (organizationId) {
+                organizationId.addEventListener('change', function (el) {
+                    const cardName = document.querySelector("#cardName");
+                    cardName.value = `${organizationId.options[organizationId.options.selectedIndex].innerText}${cardName.value}`;
+                })
+            }
         })
         .catch(error => {
             console.error('There was a problem with the fetch request:', error);
@@ -178,34 +186,33 @@ function action() {
 
 function insertEl(data) {
     document.querySelector("#orcamento_form > div.col-sm-3.form-buttons > div > div").insertAdjacentHTML("afterend", `
-        <div style="display: flex;">
-            <div>Funil:</div>
-            <div id="setFunnel" style="width: 100%;"></div>
-        </div>
-        
-        <div style="display: flex;">
-            <div>Card:</div>
-            <div id="setCard" style="width: 100%;"></div>
-        </div>
-
-        <div>
+        <div style="width:100%;">
             <div style="display: flex;">
-                <div>Titulo:</div>
+                <div style="width: 7rem;">Funil:</div>
+                <div id="setFunnel" style="width: 100%;"></div>
+            </div>
+            
+            <div style="display: flex; margin-top:5px;">
+                <div style="width: 7rem;">Card:</div>
+                <div id="setCard" style="width: 100%;"></div>
+            </div>
+
+            <div style="display: flex; margin-top:5px;">
+                <div style="width: 7rem;">Empresa:</div>
+                <div id="selecOrganization" style="width: 100%;"></div>
+            </div>
+            <div style="display: flex; margin-top:5px;">
+                <div style="width: 7rem;">Titulo:</div>
                 <div style="width: 100%;">
-                    <input style="width: 100%;" type="text" id="cardName" value="${data.clientName} - ${data.budget}">
+                    <input style="width: 100%;" type="text" id="cardName" value=" - ${data.budget}">
                 </div>
             </div>
 
-            <div style="display: flex;">
-                <div>Valor:</div>
+            <div style="display: flex; margin-top:5px;">
+                <div style="width: 7rem;">Valor:</div>
                 <div style="width: 100%;">
                     <input style="width: 100%;" type="text" id="price" value="${data.servicePrice}">
                 </div>
-            </div>
-
-            <div style="display: flex;">
-                <div>Empresa:</div>
-                <div id="selecOrganization" style="width: 100%;"></div>
             </div>
 
             <div style="display: flex; margin:10px 0;" id="resSendAgendor"></div>
@@ -238,10 +245,10 @@ function sendAgendor() {
         "ownerUser": userId,
         "funnel": parseInt(funnelIdLS),
         "dealStage": parseInt(cardSequenceLS),
-        "value": document.querySelector("#price").value.replace(",","."),
+        "value": document.querySelector("#price").value.replace(",", "."),
         "allowToAllUsers": true
     });
-    
+
     const requestOptions = {
         method: "POST",
         headers: myHeaders,
@@ -251,18 +258,18 @@ function sendAgendor() {
 
     const route = 'api/organizations/' + document.querySelector("#organizationId").value + '/';
 
-    if( isNumber(document.querySelector("#organizationId").value) && parseInt(funnelIdLS) != null && parseInt(cardSequenceLS) != null){
+    if (isNumber(document.querySelector("#organizationId").value) && parseInt(funnelIdLS) != null && parseInt(cardSequenceLS) != null) {
         fetch(`${url}${route}${token}`, requestOptions)
-        .then((response) => response.json())
-        .then((result) => {
-            if (result.errors) {
-                resSendAgendor(result.errors[0])
-            } else {
-                resSendAgendor("Enviado com sucesso!")
-            }
-        })
-        .catch((error) => console.error(error));
-    }else{
+            .then((response) => response.json())
+            .then((result) => {
+                if (result.errors) {
+                    resSendAgendor(result.errors[0])
+                } else {
+                    resSendAgendor("Enviado com sucesso!")
+                }
+            })
+            .catch((error) => console.error(error));
+    } else {
         resSendAgendor("Deve preencher todos os campos corretamente!")
     }
 
